@@ -50,12 +50,12 @@ export default class ColorSettings extends FormApplication {
 
   async _updateObject(event, formData) {
     Object.keys(formData).forEach((key) => {
-      setProperty(this, key, formData[key]);
+      foundry.utils.setProperty(this, key, formData[key]);
     });
 
     const path = event.currentTarget.attributes["name"] ?? event.currentTarget.attributes["data-edit"];
     if (path?.value) {
-      setProperty(this, `colors.${path.value.split(".")[1]}.template`, null);
+      foundry.utils.setProperty(this, `colors.${path.value.split(".")[1]}.template`, null);
     }
 
     this.render();
@@ -75,7 +75,7 @@ export default class ColorSettings extends FormApplication {
         const template = this.templates.find((x) => x.id === id);
         if (template) {
           const { actors, ...rest } = template;
-          setProperty(this, templatePath, {
+          foundry.utils.setProperty(this, templatePath, {
             template: id,
             ...rest,
           });
@@ -89,7 +89,7 @@ export default class ColorSettings extends FormApplication {
           }
         } else {
           if (this.localActor) {
-            const template = this.templates.find((x) => x.id === getProperty(this, path));
+            const template = this.templates.find((x) => x.id === foundry.utils.getProperty(this, path));
             const newList = template.actors?.filter((actor) => actor !== this.localActor.id);
             this.templates[this.templates.indexOf(template)] = {
               ...template,
@@ -262,7 +262,7 @@ const getDispositionName = (token, actor) => {
 
 export const areDispositionSettingsEqual = (colors, token, actor) => {
   const defaultColor = getActorIntroductionColorsByData(token, actor);
-  const diff = (a, b) => Boolean(a) === Boolean(b) && (!a || Object.keys(diffObject(a, b)).length === 0);
+  const diff = (a, b) => Boolean(a) === Boolean(b) && (!a || Object.keys(foundry.utils.diffObject(a, b)).length === 0);
   return (
     // Use diffObject if it gets fixed for arrays in objects: https://github.com/foundryvtt/foundryvtt/issues/6813#issuecomment-1152704071
     colors?.background === defaultColor.background &&

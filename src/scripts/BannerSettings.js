@@ -70,7 +70,9 @@ export default class BannerSettings extends FormApplication {
   }
 
   async _renderOuter() {
-    const outer = $(await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/bannerSettings.hbs`));
+    const outer = $(
+      await foundry.applications.handlebars.renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/bannerSettings.hbs`)
+    );
     outer[0].style.height = "auto";
     const header = $(outer).find(".position-anchor")[0];
     new Scalable(this, outer, header, true);

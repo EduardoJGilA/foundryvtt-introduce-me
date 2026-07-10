@@ -7,7 +7,7 @@ export default class AudioSettings extends FormApplication {
     this.resolve = resolve;
     this.reject = reject;
 
-    this.audio = deepClone(audio) ?? getDefaultSettings();
+    this.audio = foundry.utils.deepClone(audio) ?? getDefaultSettings();
     this.tracks = tracks;
     this.playingSound = null;
     this.timestampUpdate = null;
@@ -49,17 +49,17 @@ export default class AudioSettings extends FormApplication {
 
     Object.keys(formData).forEach((key) => {
       if (event.currentTarget.name !== key) {
-        setProperty(this, key, formData[key]);
+        foundry.utils.setProperty(this, key, formData[key]);
       } else {
         switch (eventProperty) {
           case "offset":
-            setProperty(this, key, Math.min(formData[key], formData["audio.sounds.0.endOffset"] - 1));
+            foundry.utils.setProperty(this, key, Math.min(formData[key], formData["audio.sounds.0.endOffset"] - 1));
             break;
           case "endOffset":
-            setProperty(this, key, Math.max(formData[key], formData["audio.sounds.0.options.offset"] + 1));
+            foundry.utils.setProperty(this, key, Math.max(formData[key], formData["audio.sounds.0.options.offset"] + 1));
             break;
           default:
-            setProperty(this, key, formData[key]);
+            foundry.utils.setProperty(this, key, formData[key]);
             break;
         }
       }

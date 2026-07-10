@@ -67,20 +67,16 @@ Hooks.on("renderTokenHUD", async (data, html) => {
   }
 });
 
-Hooks.on("renderTokenConfig", async (data, html) => {
-  if ($(html).parent("section").length === 0) {
-    const configButton = $(html).find(".window-header > .configure-sheet").first();
-    const closeButton = $(html).find(".window-header > .header-button.close").first();
-    const insertPoint = configButton.length > 0 ? configButton : closeButton;
-    $(insertPoint).before(
-      `<a class="introduce-me-button"><i class="fas fa-handshake"></i>${i18n(
-        `${CONSTANTS.MODULE_ID}.actorSettings.introduceButton`
-      )}</>`
-    );
-    $(".window-header > .introduce-me-button").click((event) => {
-      new IntroduceDialog(data.token, data.token.actor).render(true);
-    });
-  }
+Hooks.on("getHeaderControlsTokenConfig", (app, controls) => {
+  const token = app.document ?? app.token;
+  controls.push({
+    icon: "fas fa-handshake",
+    label: i18n(`${CONSTANTS.MODULE_ID}.actorSettings.introduceButton`),
+    action: "introduceMe",
+    onClick: () => {
+      new IntroduceDialog(token, token.actor).render(true);
+    },
+  });
 });
 
 Hooks.on("getActorDirectoryEntryContext", (_, entryOptions) => {

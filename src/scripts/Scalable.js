@@ -8,7 +8,7 @@ export default class Scalable extends Draggable {
     this._moveTime = now;
 
     // Record initial position
-    this.position = duplicate(this.app.position);
+    this.position = foundry.utils.deepClone(this.app.position);
     if (this.position.height === "auto") this.position.height = this.element.clientHeight;
     if (this.position.width === "auto") this.position.width = this.element.clientWidth;
     if (this.position.scale === null) this.position.scale = 1;
@@ -33,7 +33,7 @@ export default class Scalable extends Draggable {
     const yScale = (heightChange / 125) * this.position.scale;
 
     this.app.setPosition({
-      scale: Math.clamped(1, Math.max(xScale, yScale), this._initial.scaleMax),
+      scale: Math.clamp(1, Math.max(xScale, yScale), this._initial.scaleMax),
     });
   }
 }

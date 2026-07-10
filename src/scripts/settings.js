@@ -123,7 +123,7 @@ export const registerSettings = () => {
 };
 
 export const registerHandlebars = () => {
-  loadTemplates([
+  foundry.applications.handlebars.loadTemplates([
     `modules/${CONSTANTS.MODULE_ID}/templates/introduction.hbs`,
     `modules/${CONSTANTS.MODULE_ID}/templates/partials/colorSetting.hbs`,
     `modules/${CONSTANTS.MODULE_ID}/templates/partials/colorTemplate.hbs`,

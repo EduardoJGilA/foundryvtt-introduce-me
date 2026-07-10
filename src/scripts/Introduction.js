@@ -108,7 +108,7 @@ export default class Introduction {
 
       $(document.body).append(
         $(
-          await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/introduction.hbs`, {
+          await foundry.applications.handlebars.renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/introduction.hbs`, {
             name: useActorName ? actor.name : token.name,
             img: this.getIntroductionImage(token, actor),
             flavor: flavor,
@@ -266,7 +266,7 @@ export default class Introduction {
 
     $(document.body).append(
       $(
-        await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/introduction.hbs`, {
+        await foundry.applications.handlebars.renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/introduction.hbs`, {
           name: localToken
             ? useActorName
               ? localActor.name
@@ -299,7 +299,11 @@ export default class Introduction {
 
   renderHUD = async (data, html) => {
     const rightColumn = $(html).find(".col.right");
-    $(rightColumn).append(await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/introductionInteract.hbs`));
+    $(rightColumn).append(
+      await foundry.applications.handlebars.renderTemplate(
+        `modules/${CONSTANTS.MODULE_ID}/templates/introductionInteract.hbs`
+      )
+    );
 
     $(rightColumn)
       .find(".introduce-me.introduction-interact")

@@ -43,7 +43,7 @@ export default class ColorTemplates extends FormApplication {
 
   async _updateObject(event, formData) {
     Object.keys(formData).forEach((key) => {
-      setProperty(this, key, formData[key]);
+      foundry.utils.setProperty(this, key, formData[key]);
     });
     this.render();
   }

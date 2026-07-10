@@ -89,9 +89,9 @@
   "esmodules": ["module.js"],
   "styles": ["styles/introduce-me.css"],
   "compatibility": {
-    "minimum": 11,
-    "verified": 11,
-    "maximum": 12
+    "minimum": 12,
+    "verified": 14,
+    "maximum": 14
   },
   "url": "https://github.com/p4535992/foundryvtt-introduce-me",
   "manifest": "https://github.com/p4535992/foundryvtt-introduce-me/releases/download/0.9.12/module.json",
