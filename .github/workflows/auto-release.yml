@@ -30,10 +30,28 @@ jobs:
           git commit -m "chore: bump version to ${{ steps.bump.outputs.version }}"
           git push
 
-      - name: Tag and create release
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build distribution
+        run: npm run build
+
+      - name: Package module
+        run: |
+          mkdir package
+          mv -v ./dist/* ./package/
+          (cd package && zip -r "$OLDPWD/module.zip" .)
+
+      - name: Tag and create release with assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "v${{ steps.bump.outputs.version }}" \
             --title "v${{ steps.bump.outputs.version }}" \
-            --generate-notes
+            --generate-notes \
+            ./src/module.json ./module.zip
